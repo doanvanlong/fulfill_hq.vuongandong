@@ -117,25 +117,25 @@
             </div>
           </div>
           <div v-if="infoOrder.ff_note || infoOrder.ff_note_link || infoOrder.ghichu">
-            <div v-if="infoOrder.ff_note && infoOrder.ff_note_link" class="grid grid-cols-12 mb-4 text-danger ">
+            <div v-if="infoOrder.ff_note && infoOrder.ff_note_link" class="grid grid-cols-12 mb-4 text-red-600 ">
             </div>
             <label class="font-semibold sm:col-span-2 col-span-12 col-form-label">Fulfill Note </label>
             <div class="sm:col-span-10 col-span-12">
               <div class="formRight">
-                <div><strong>
+                <div><strong class="text-red-600">
                     {{ infoOrder.ff_note }}
                   </strong></div>
-                <div class="mt-1"><strong><a :href="infoOrder.ff_note_link" target="_blank" rel="noopener noreferrer">
+                <div class="mt-1 text-red-600"><strong><a :href="infoOrder.ff_note_link" target="_blank" rel="noopener noreferrer">
                       {{ infoOrder.ff_note_link }}
                     </a></strong></div>
               </div>
             </div>
           </div>
-          <div v-if="infoOrder.ghichu" class=" grid grid-cols-12 mb-4 text-danger ">
+          <div v-if="infoOrder.ghichu" class=" grid grid-cols-12 mb-4 text-red-600 ">
             <label class="font-semibold sm:col-span-2 col-span-12 col-form-label">Fulfill Note </label>
             <div class="sm:col-span-10 col-span-12">
               <div class="formRight">
-                <div><strong>
+                <div class="text-red-600"><strong>
                     {{ infoOrder.ghichu }}
                   </strong></div>
               </div>
