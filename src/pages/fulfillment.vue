@@ -685,6 +685,7 @@ export default {
               console.log(response.data);
               this.showToast('success', 'Update Order Code  Fulfill successfully');
               this.closeToast(4000);
+              infoOrder.fulfil = 1;
               this.handleGetOrderApi(infoOrder);
             })
             .catch((error) => {
