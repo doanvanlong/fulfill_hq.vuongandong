@@ -685,7 +685,10 @@ export default {
               console.log(response.data);
               this.showToast('success', 'Update Order Code  Fulfill successfully');
               this.closeToast(4000);
+              // eslint-disable-next-line no-param-reassign
               infoOrder.fulfil = 1;
+              // eslint-disable-next-line no-param-reassign
+              infoOrder.order_code = addorderparse.data;
               this.handleGetOrderApi(infoOrder);
             })
             .catch((error) => {
