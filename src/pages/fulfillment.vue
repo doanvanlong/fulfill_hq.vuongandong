@@ -163,10 +163,10 @@
           <div style="flex:4">
             <select id="shipping_method" name="shipping_method"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected value="1">FirstClass</option>
-              <option value="2">Priority</option>
-              <option value="3">RushProduction</option>
-              <option value="6">Line Test 21_5</option>
+              <option :selected="updateMethodShip == 1"  value="1">FirstClass</option>
+              <option :selected="updateMethodShip == 2" value="2">Priority</option>
+              <option :selected="updateMethodShip == 3" value="3">RushProduction</option>
+              <option :selected="updateMethodShip == 6" value="6">Line Test 21_5</option>
             </select>
           </div>
         </div>
@@ -279,7 +279,7 @@
                     <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_front[]" title=""
                         id="design_link_front"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        :value="handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front')" />
+                        :value="item.designs?handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front'):''" />
                     </div>
                   </div>
                   <div class="flex">
@@ -299,7 +299,7 @@
                     <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_back[]" title=""
                         id="design_link_back"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        :value="handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back')" />
+                        :value="item.designs?handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back'):''" />
                     </div>
                   </div>
                   <div class="flex">
@@ -313,10 +313,10 @@
                   </div>
                 </td>
                 <td style="width:200px" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  <a :href="item.designs.link || item.designs.link_mockup_back" target="_blank"
+                  <a :href="item.designs?item.designs.link || item.designs.link_mockup_back:''" target="_blank"
                     rel="noopener noreferrer">
                     <img class="w-32 h-32 object-cover rounded-md shadow-md"
-                      :src="item.designs.link || item.designs.link_mockup_back" alt=""></a>
+                      :src="item.designs?item.designs.link || item.designs.link_mockup_back:''" alt=""></a>
                 </td>
                 <td style="width:200px" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                   <a :href="item.photo" target="_blank" rel="noopener noreferrer"> <img
@@ -381,6 +381,7 @@ export default {
       loading: false,
       orderCodeFF: '',
       acc_token_fs: '',
+      updateMethodShip: 1,
       idFulfilType: params.get('id_fulfil_type'),
       iframeId: 'iframeLable',
       domainApi: 'https://hq6.vuongandong.com/danang/',
@@ -686,9 +687,6 @@ export default {
               this.showToast('success', 'Update Order Code  Fulfill successfully');
               this.closeToast(4000);
               // eslint-disable-next-line no-param-reassign
-              infoOrder.fulfil = 1;
-              // eslint-disable-next-line no-param-reassign
-              infoOrder.order_code = addorderparse.data;
               this.handleGetOrderApi(infoOrder);
             })
             .catch((error) => {
@@ -712,61 +710,50 @@ export default {
       console.log(fulfill);
       console.log(orderCodeFs);
       // eslint-disable-next-line eqeqeq
-      if (fulfill == 1 && orderCodeFs) {
-        // order detail
-        // eslint-disable-next-line camelcase, no-undef
+      if (!this.acc_token_fs) {
+        // eslint-disable-next-line camelcase, no-unused-vars
+        const acc_token = await this.loginFlashShip(infoOrder.username_fs, infoOrder.password_fs);
         // eslint-disable-next-line camelcase
-        if (!this.acc_token_fs) {
-          // eslint-disable-next-line camelcase, no-unused-vars
-          const acc_token = await this.loginFlashShip(infoOrder.username_fs, infoOrder.password_fs);
-          // eslint-disable-next-line camelcase
-          this.acc_token_fs = acc_token;
-        }
-        if (this.acc_token_fs) {
-          // orderCodeFs
-          // eslint-disable-next-line no-use-before-define
-          const orderDetailFs = await this.orderDetailFs(orderCodeFs, this.acc_token_fs);
-          const orderDetailFsParse = JSON.parse(orderDetailFs);
-          console.log(orderDetailFsParse);
-          infoOrder.items.forEach((value, k) => {
-            // eslint-disable-next-line no-unused-expressions, no-sequences
-            document.querySelector(`#productct${value.id} #sku`).value = (orderDetailFsParse.products[k].variantId),
-            document.querySelector(`#productct${value.id} #fulfill_price`).value = (`${orderDetailFsParse.totalFee} (priceALL)`),
-            document.querySelector(`#productct${value.id} #design_link_front`).value = (orderDetailFsParse.products[k].frontPrintUrl);
-            document.querySelector(`#productct${value.id} #design_link_back`).value = (orderDetailFsParse.products[k].backPrintUrl);
-          });
-          const htmlShiipingMethod = `
-                        <option ${orderDetailFsParse.shipmentMethod === 1 ? 'selected' : ''}  value="1">FirstClass</option>
-                        <option ${orderDetailFsParse.shipmentMethod === 2 ? 'selected' : ''}  value="2">Priority</option>
-                        <option ${orderDetailFsParse.shipmentMethod === 3 ? 'selected' : ''}  value="3">RushProduction</option>
-                        <option ${orderDetailFsParse.shipmentMethod === 6 ? 'selected' : ''}  value="6">Line test 21_5</option>
-                        `;
-          document.getElementById('#shipping_method').innerHTML = (htmlShiipingMethod);
-          // update price
-          // eslint-disable-next-line camelcase
-          if (ff_price === '' || ff_price === 0) {
-            const datas2 = {};
-            // eslint-disable-next-line no-underscore-dangle
-            datas2.id_ = infoOrder.id;
-            datas2.act = 'update_order_code_fs_not_ngayin';
-            datas2.method_fs = orderDetailFsParse.shipmentMethod;
-            datas2.price = orderDetailFsParse.totalFee;
-            // eslint-disable-next-line no-undef
-            axios.get(`${this.domainApi}ajax/xuly_admin_dn.php`, {
-              params: datas2,
-              headers: {
-                // eslint-disable-next-line template-curly-spacing, no-undef
-                Authorization: `Bearer ${infoOrder.id}`,
-              },
+        this.acc_token_fs = acc_token;
+      }
+      if (this.acc_token_fs) {
+        // orderCodeFs
+        // eslint-disable-next-line no-use-before-define
+        const orderDetailFs = await this.orderDetailFs(orderCodeFs, this.acc_token_fs);
+        const orderDetailFsParse = JSON.parse(orderDetailFs);
+        console.log(orderDetailFsParse);
+        infoOrder.items.forEach((value, k) => {
+          // eslint-disable-next-line no-unused-expressions, no-sequences
+          document.querySelector(`#productct${value.id} #sku`).value = (orderDetailFsParse.products[k].variantId),
+          document.querySelector(`#productct${value.id} #fulfill_price`).value = (`${orderDetailFsParse.totalFee} (priceALL)`),
+          document.querySelector(`#productct${value.id} #design_link_front`).value = (orderDetailFsParse.products[k].frontPrintUrl);
+          document.querySelector(`#productct${value.id} #design_link_back`).value = (orderDetailFsParse.products[k].backPrintUrl);
+        });
+        this.updateMethodShip = orderDetailFsParse.shipmentMethod;
+        // update price
+        // eslint-disable-next-line camelcase, eqeqeq
+        if (ff_price == '' || ff_price == 0) {
+          const datas2 = {};
+          // eslint-disable-next-line no-underscore-dangle
+          datas2.id_ = infoOrder.id;
+          datas2.act = 'update_order_code_fs_not_ngayin';
+          datas2.method_fs = orderDetailFsParse.shipmentMethod;
+          datas2.price = orderDetailFsParse.totalFee;
+          // eslint-disable-next-line no-undef
+          axios.get(`${this.domainApi}ajax/xuly_admin_dn.php`, {
+            params: datas2,
+            headers: {
+              // eslint-disable-next-line template-curly-spacing, no-undef
+              Authorization: `Bearer ${infoOrder.id}`,
+            },
+          })
+            .then((response) => {
+              console.log(response.data);
+              this.showToast('success', 'Update Price Fulfill successfully');
             })
-              .then((response) => {
-                console.log(response.data);
-                this.showToast('success', 'Update Price Fulfill successfully');
-              })
-              .catch((error) => {
-                console.error('There was an error!', error);
-              });
-          }
+            .catch((error) => {
+              console.error('There was an error!', error);
+            });
         }
       }
     },
@@ -790,7 +777,10 @@ export default {
             this.miss_items = true;
           }
           // this.checkLinkLabelTiktok = response.data.order.tracking.includes('seller');
-          this.handleGetOrderApi(response.data.order);
+          // eslint-disable-next-line eqeqeq
+          if (response.data.order.fulfil == 1 && response.data.order.order_code !== '') {
+            this.handleGetOrderApi(response.data.order);
+          }
         })
         .catch((error) => {
           console.error(error);
