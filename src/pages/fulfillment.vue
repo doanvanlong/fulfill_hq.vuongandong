@@ -187,7 +187,7 @@
                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                   Preview Design
                 </th>
-                <th scope="col" class="hidden px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                   Mockup
                 </th>
                 <th scope="col" class="px-6 py-3">
