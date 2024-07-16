@@ -185,9 +185,9 @@
                   Designs
                 </th>
                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                  Seller SKU
+                  Preview Design
                 </th>
-                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                <th scope="col" class="hidden px-6 py-3 bg-gray-50 dark:bg-gray-800">
                   Mockup
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -201,9 +201,9 @@
                 <td style="width:50px" class="px-6 py-4">
                   {{ index + 1 }}
                 </td>
-                <th style="width:600px" scope="row"
+                <th style="width:500px" scope="row"
                   class="break-all px-6 py-4 font-medium text-gray-900  bg-gray-50 dark:text-white dark:bg-gray-800">
-                  <div class="flex">
+                  <div class="flex mb-2 ">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Product Name: </div>
                     <div style="flex:4">{{ item.ten }}
                       <div>
@@ -218,28 +218,28 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Product Type: </div>
                     <div style="flex:4"> <input type="text" autocomplete="off" name="type[]" title=""
-                        :value="item.ff.product_type" id="type"
+                         id="type" v-model="item.product_type_ff"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Color: </div>
-                    <div style="flex:4"> <input type="text" autocomplete="off" name="color[]" :value="item.ff.color"
+                    <div style="flex:4"> <input type="text" autocomplete="off" name="color[]"  v-model="item.color_ff"
                         title="" id="color"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Size: </div>
-                    <div style="flex:4"> <input type="text" autocomplete="off" name="size[]" :value="item.ff.size"
+                    <div style="flex:4"> <input type="text" autocomplete="off" name="size[]"  v-model="item.size_ff"
                         title="" id="size"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="font-semibold  items-center sm:col-span-2 col-span-12 col-form-label">
                       VariantID
                       <button :data-idP="item.id" id="search{{ item.id }}" type="button"
@@ -254,8 +254,8 @@
                     </div>
                   </div>
                 </th>
-                <td style="width:500px" class="px-6 py-4">
-                  <div class="flex">
+                <td style="width:400px" class="px-6 py-4">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Fulfill Price:
                     </div>
                     <div style="flex:4"> <input type="text" autocomplete="off" name="fulfill_price[]" title=""
@@ -263,7 +263,7 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         value="" /></div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Print side: </div>
                     <div style="flex:4"> <select id="print_side_gm" name="print_side_gm[]"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -273,17 +273,22 @@
                       </select>
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="">Design link <span
                         class=" bg-purple-100 text-purple-800 text-xs font-medium  rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">FRONT</span>
                     </div>
-                    <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_front[]" title=""
+                    <!-- <div style="flex:4"> <input type="text"  autocomplete="off" name="design_link_front[]" title=""
                         id="design_link_front"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         :value="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front') : ''" />
+                    </div> -->
+                    <div style="flex:4"> <input type="text"  autocomplete="off" name="design_link_front[]" v-model="item.designLinkFront" title=""
+                        id="design_link_front"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                         />
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Mockup link Front:
                     </div>
                     <div style="flex:4"> <input type="text" autocomplete="off" name="mockup_link_front[]" title=""
@@ -293,17 +298,22 @@
                     </div>
                   </div>
                   <!-- back -->
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="">Design link <span
                         class="bg-purple-100  text-purple-800 text-xs font-medium  rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">BACK</span>
                     </div>
-                    <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_back[]" title=""
+                    <!-- <div style="flex:4"> <input type="text" autocomplete="off"  name="design_link_back[]" title=""
                         id="design_link_back"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         :value="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back') : ''" />
+                    </div> -->
+                    <div style="flex:4"> <input type="text" autocomplete="off"  name="design_link_back[]" title=""
+                        id="design_link_back" v-model="item.designLinkBack"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                         />
                     </div>
                   </div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div style="flex:1" class="text-sm font-medium text-gray-900 dark:text-white">Mockup link Back:
                     </div>
                     <div style="flex:4"> <input type="text" autocomplete="off" name="mockup_link_back[]" title=""
@@ -313,7 +323,20 @@
                     </div>
                   </div>
                 </td>
-                <td style="width:200px" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                <td style="width:200px" class="px-6 py-4 ">
+                  FRONT
+                  <!-- <a :href="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front') : ''" target="_blank" class="flex justify-center items-center w-full h-full" :style=" handleClassColor(item.ff.color)">
+                   <img :src="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front') : ''" alt="Enter Design URL" class="max-w-full max-h-full">
+                  </a> -->
+                  <a :href="item.designLinkFront" target="_blank" class="flex justify-center items-center w-full h-full" :style=" handleClassColor(item.color_ff)">
+                   <img :src="item.designLinkFront" alt="Enter Design URL" class="max-w-full max-h-full">
+                  </a>
+                  BACK
+                  <a :href="item.designLinkBack" target="_blank" class="flex justify-center items-center w-full h-full" :style=" handleClassColor(item.color_ff)">
+                   <img :src="item.designLinkBack" alt="Enter Design URL" class="max-w-full max-h-full">
+                  </a>
+                </td>
+                <td style="width:200px" class="hidden px-6 py-4 bg-gray-50 dark:bg-gray-800">
                   <a :href="item.designs ? item.designs.link || item.designs.link_mockup_back : ''" target="_blank"
                     rel="noopener noreferrer">
                     <img class="w-32 h-32 object-cover rounded-md shadow-md"
@@ -356,6 +379,8 @@
         </button>
       </div>
     </div>
+    <div>
+    </div>
     <div class="absolute top-3 w-full left-1/2" id="toastElement"></div>
   </div>
 </template>
@@ -382,6 +407,7 @@ export default {
       loading: false,
       orderCodeFF: '',
       acc_token_fs: '',
+      jsonCheck: [],
       updateMethodShip: 1,
       idFulfilType: params.get('id_fulfil_type'),
       iframeId: 'iframeLable',
@@ -778,6 +804,7 @@ export default {
           this.infoOrder = response.data.order;
           this.infoShop = response.data.order.shop;
           this.fulfill = response.data.order.fulfil;
+          this.jsonCheck = JSON.parse(response.data.order.json);
           if (response.data.order.miss_items === true) {
             this.miss_items = true;
           }
@@ -786,14 +813,15 @@ export default {
           if (response.data.order.fulfil == 1 && response.data.order.order_code !== '') {
             this.handleGetOrderApi(response.data.order);
           }
+          this.updateDesignLinks(); // Cập nhật các link thiết kế khi component được mount
         })
         .catch((error) => {
           console.error(error);
         });
     },
     async handleDesign2(metaOrder, designs, productType, side) {
-      const arrayDarkShirt = ['Sand', 'White', 'Ash', 'Sport Grey', 'Light Blue', 'Light Pink'];
-      const arrayLightShirt = ['Black', 'Forest Green', 'Navy', 'Maroon', 'Royal Blue', 'Military Green'];
+      const arrayDarkShirt = ['Sand', 'White', 'Ash', 'Sport Grey', 'Spot Grey', 'Light Blue', 'Light Pink'];
+      const arrayLightShirt = ['Black', 'Orange', 'Forest Green', 'Navy', 'Maroon', 'Royal Blue', 'Dark Heather', 'Military Green'];
       // eslint-disable-next-line no-unused-vars
       const [color, size] = metaOrder.split(',');
 
@@ -821,7 +849,7 @@ export default {
     },
     // eslint-disable-next-line consistent-return
     handleDesign(metaOrder, designs, productType, side) {
-      const arrayDarkShirt = ['Sand', 'White', 'Ash', 'Sport Grey', 'Light Blue', 'Light Pink'];
+      const arrayDarkShirt = ['Sand', 'White', 'Ash', 'Sport Grey', 'Sport Grey', 'Light Blue', 'Light Pink'];
       const arrayLightShirt = ['Black', 'Forest Green', 'Navy', 'Maroon', 'Royal Blue', 'Military Green'];
       const [color] = metaOrder.split(',');
       if (designs) {
@@ -833,7 +861,11 @@ export default {
             }
             return designs.design_bd;
           } if (productType === 'HOODIE') {
-            return designs.design_fd_fs;
+            if (side === 'front') {
+              // design đen
+              return designs.design_fd_fs;
+            }
+            return designs.design_bd;
           }
         } else if (arrayDarkShirt.includes(color)) {
           if (productType === 'SHIRT' || productType === 'SWEATSHIRT') {
@@ -843,7 +875,11 @@ export default {
             }
             return designs.design_bl;
           } if (productType === 'HOODIE') {
-            return designs.design_fl_fs;
+            if (side === 'front') {
+              // design đen
+              return designs.design_fl_fs;
+            }
+            return designs.design_bl;
           }
         } else {
           return '';
@@ -851,6 +887,57 @@ export default {
       } else {
         return '';
       }
+    },
+    handleClassColor(color) {
+      if (color === 'Sand') {
+        return 'background-color:rgb(220, 210, 190);';
+      }
+      if (color === 'White') {
+        return 'background-color:rgb(255, 255, 255)';
+      }
+      if (color === 'Ash') {
+        return 'background-color:rgb(246, 246, 246)';
+      }
+      if (color === 'Ash Grey') {
+        return 'background-color:rgb(246, 246, 246)';
+      }
+      if (color === 'Sport Grey') {
+        return 'background-color:rgb(202, 202, 202);';
+      }
+      if (color === 'Spot Grey') {
+        return 'background-color:rgb(202, 202, 202);';
+      }
+      if (color === 'Light Blue') {
+        return 'background-color:rgb(214, 230, 247);';
+      }
+      if (color === 'Light Pink') {
+        return 'background-color:rgb(254, 224, 235);';
+      }
+      if (color === 'Black') {
+        return 'background-color:black';
+      }
+      if (color === 'Forest Green') {
+        return 'background-color:rgb(34, 59, 38);';
+      }
+      if (color === 'Navy') {
+        return 'background-color:rgb(26, 34, 55);';
+      }
+      if (color === 'Maroon') {
+        return 'background-color:rgb(100, 40, 56);';
+      }
+      if (color === 'Royal Blue') {
+        return 'background-color:rgb(8, 79, 151);';
+      }
+      if (color === 'Dark Heather') {
+        return 'background-color:rgb(69, 69, 69);';
+      }
+      if (color === 'Military Green') {
+        return 'background-color:rgb(98, 102, 76);';
+      }
+      if (color === 'Orange') {
+        return 'background-color:rgb(234, 95, 34);';
+      }
+      return '';
     },
     async orderDetailFs(orderId, token) {
       try {
@@ -875,6 +962,14 @@ export default {
         console.error('Error fetching order details:', error);
         throw error; // Re-throw the error to be caught by the caller
       }
+    },
+    updateDesignLinks() {
+      this.infoOrder.items.forEach((item) => {
+        // eslint-disable-next-line no-param-reassign
+        item.designLinkFront = this.handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front');
+        // eslint-disable-next-line no-param-reassign
+        item.designLinkBack = this.handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back');
+      });
     },
   },
 };
