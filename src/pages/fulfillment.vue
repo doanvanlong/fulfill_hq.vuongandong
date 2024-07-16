@@ -125,7 +125,8 @@
                 <div><strong class="text-red-600">
                     {{ infoOrder.ff_note }}
                   </strong></div>
-                <div class="mt-1 text-red-600"><strong><a :href="infoOrder.ff_note_link" target="_blank" rel="noopener noreferrer">
+                <div class="mt-1 text-red-600"><strong><a :href="infoOrder.ff_note_link" target="_blank"
+                      rel="noopener noreferrer">
                       {{ infoOrder.ff_note_link }}
                     </a></strong></div>
               </div>
@@ -163,7 +164,7 @@
           <div style="flex:4">
             <select id="shipping_method" name="shipping_method"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option :selected="updateMethodShip == 1"  value="1">FirstClass</option>
+              <option :selected="updateMethodShip == 1" value="1">FirstClass</option>
               <option :selected="updateMethodShip == 2" value="2">Priority</option>
               <option :selected="updateMethodShip == 3" value="3">RushProduction</option>
               <option :selected="updateMethodShip == 6" value="6">Line Test 21_5</option>
@@ -279,7 +280,7 @@
                     <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_front[]" title=""
                         id="design_link_front"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        :value="item.designs?handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front'):''" />
+                        :value="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'front') : ''" />
                     </div>
                   </div>
                   <div class="flex">
@@ -299,7 +300,7 @@
                     <div style="flex:4"> <input type="text" autocomplete="off" name="design_link_back[]" title=""
                         id="design_link_back"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        :value="item.designs?handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back'):''" />
+                        :value="item.designs ? handleDesign(item.meta_order, item.designs, item.ff.product_type, 'back') : ''" />
                     </div>
                   </div>
                   <div class="flex">
@@ -313,10 +314,10 @@
                   </div>
                 </td>
                 <td style="width:200px" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  <a :href="item.designs?item.designs.link || item.designs.link_mockup_back:''" target="_blank"
+                  <a :href="item.designs ? item.designs.link || item.designs.link_mockup_back : ''" target="_blank"
                     rel="noopener noreferrer">
                     <img class="w-32 h-32 object-cover rounded-md shadow-md"
-                      :src="item.designs?item.designs.link || item.designs.link_mockup_back:''" alt=""></a>
+                      :src="item.designs ? item.designs.link || item.designs.link_mockup_back : ''" alt=""></a>
                 </td>
                 <td style="width:200px" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                   <a :href="item.photo" target="_blank" rel="noopener noreferrer"> <img
@@ -687,6 +688,7 @@ export default {
               this.showToast('success', 'Update Order Code  Fulfill successfully');
               this.closeToast(4000);
               // eslint-disable-next-line no-param-reassign
+              infoOrder.order_code = addorderparse.data;
               this.handleGetOrderApi(infoOrder);
             })
             .catch((error) => {
@@ -710,15 +712,17 @@ export default {
       console.log(fulfill);
       console.log(orderCodeFs);
       // eslint-disable-next-line eqeqeq
+      // eslint-disable-next-line camelcase, no-unused-vars
+      // eslint-disable-next-line camelcase
+      // orderCodeFs
+      // eslint-disable-next-line no-use-before-define
       if (!this.acc_token_fs) {
-        // eslint-disable-next-line camelcase, no-unused-vars
+        // eslint-disable-next-line camelcase
         const acc_token = await this.loginFlashShip(infoOrder.username_fs, infoOrder.password_fs);
         // eslint-disable-next-line camelcase
         this.acc_token_fs = acc_token;
       }
       if (this.acc_token_fs) {
-        // orderCodeFs
-        // eslint-disable-next-line no-use-before-define
         const orderDetailFs = await this.orderDetailFs(orderCodeFs, this.acc_token_fs);
         const orderDetailFsParse = JSON.parse(orderDetailFs);
         console.log(orderDetailFsParse);
@@ -748,6 +752,7 @@ export default {
             },
           })
             .then((response) => {
+              // eslint-disable-next-line no-console
               console.log(response.data);
               this.showToast('success', 'Update Price Fulfill successfully');
             })
