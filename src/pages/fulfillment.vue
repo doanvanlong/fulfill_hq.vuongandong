@@ -410,6 +410,7 @@ export default {
       jsonCheck: [],
       updateMethodShip: 1,
       idFulfilType: params.get('id_fulfil_type'),
+      role: params.get('role'),
       iframeId: 'iframeLable',
       domainApi: 'https://hq6.vuongandong.com/danang/',
     };
@@ -701,6 +702,7 @@ export default {
           datas2.id_fulfil_type_url = this.idFulfilType;
           datas2.act = 'update_order_code_fs';
           datas2.order_code = addorderparse.data;
+          datas2.role = this.role;
           // eslint-disable-next-line no-undef
           axios.get(`${this.domainApi}ajax/xuly_admin_dn.php`, {
             params: datas2,
