@@ -516,7 +516,7 @@ export default {
     // eslint-disable-next-line camelcase
     async loginFlashShip(username_fs, password_fs) {
       return new Promise((resolve, reject) => {
-        fetch('https://seller.flashship.net/seller-api-v2/token', {
+        fetch('https://seller.flashship.net/seller-api/token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -554,7 +554,7 @@ export default {
           redirect: 'follow',
         };
 
-        fetch('https://seller.flashship.net/seller-api-v2/orders/shirt-add', requestOptions)
+        fetch('https://seller.flashship.net/seller-api/orders/shirt-add', requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -756,12 +756,12 @@ export default {
         console.log(orderDetailFsParse);
         infoOrder.items.forEach((value, k) => {
           // eslint-disable-next-line no-unused-expressions, no-sequences
-          document.querySelector(`#productct${value.id} #sku`).value = (orderDetailFsParse.products[k].variant_id),
-          document.querySelector(`#productct${value.id} #fulfill_price`).value = (`${orderDetailFsParse.total_fee} (priceALL)`),
-          document.querySelector(`#productct${value.id} #design_link_front`).value = (orderDetailFsParse.products[k].front_print_url);
-          document.querySelector(`#productct${value.id} #design_link_back`).value = (orderDetailFsParse.products[k].back_print_url);
+          document.querySelector(`#productct${value.id} #sku`).value = (orderDetailFsParse.products[k].variantId),
+          document.querySelector(`#productct${value.id} #fulfill_price`).value = (`${orderDetailFsParse.totalFee} (priceALL)`),
+          document.querySelector(`#productct${value.id} #design_link_front`).value = (orderDetailFsParse.products[k].frontPrintUrl);
+          document.querySelector(`#productct${value.id} #design_link_back`).value = (orderDetailFsParse.products[k].backPrintUrl);
         });
-        this.updateMethodShip = orderDetailFsParse.shipment_method;
+        this.updateMethodShip = orderDetailFsParse.shipmentMethod;
         // update price
         // eslint-disable-next-line camelcase, eqeqeq
         if (ff_price == '' || ff_price == 0) {
@@ -769,8 +769,8 @@ export default {
           // eslint-disable-next-line no-underscore-dangle
           datas2.id_ = infoOrder.id;
           datas2.act = 'update_order_code_fs_not_ngayin';
-          datas2.method_fs = orderDetailFsParse.shipment_method;
-          datas2.price = orderDetailFsParse.total_fee;
+          datas2.method_fs = orderDetailFsParse.shipmentMethod;
+          datas2.price = orderDetailFsParse.totalFee;
           // eslint-disable-next-line no-undef
           axios.get(`${this.domainApi}ajax/xuly_admin_dn.php`, {
             params: datas2,
@@ -952,7 +952,7 @@ export default {
           redirect: 'follow',
         };
 
-        const response = await fetch(`https://seller.flashship.net/seller-api-v2/orders/${orderId}`, requestOptions);
+        const response = await fetch(`https://seller.flashship.net/seller-api/orders/${orderId}`, requestOptions);
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
