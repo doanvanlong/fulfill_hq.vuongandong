@@ -674,7 +674,7 @@ export default {
       };
       // eslint-disable-next-line camelcase, eqeqeq
       if (tracking_type == 0) {
-        raw.link_label = document.getElementById('tracking').value;
+        raw.linkLabel = document.getElementById('tracking').value;
       }
       // eslint-disable-next-line camelcase
       const acc_token = await this.loginFlashShip(infoOrder.username_fs, infoOrder.password_fs);
