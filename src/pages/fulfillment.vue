@@ -516,7 +516,7 @@ export default {
     // eslint-disable-next-line camelcase
     async loginFlashShip(username_fs, password_fs) {
       return new Promise((resolve, reject) => {
-        fetch('https://seller.flashship.net/seller-api-v2/token', {
+        fetch('https://devpod.flashship.net/seller-api-v2/token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -554,7 +554,7 @@ export default {
           redirect: 'follow',
         };
 
-        fetch('https://seller.flashship.net/seller-api-v2/orders/shirt-add', requestOptions)
+        fetch('https://devpod.flashship.net/seller-api-v2/orders/shirt-add', requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -952,7 +952,7 @@ export default {
           redirect: 'follow',
         };
 
-        const response = await fetch(`https://seller.flashship.net/seller-api-v2/orders/${orderId}`, requestOptions);
+        const response = await fetch(`https://devpod.flashship.net/seller-api-v2/orders/${orderId}`, requestOptions);
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
